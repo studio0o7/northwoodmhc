@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 30, 64, 110;
+  --background-rgb: 235, 245, 255;
+  --primary-blue: 56, 189, 248;
+  --secondary-blue: 14, 165, 233;
+  --accent-blue: 2, 132, 199;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-blue-900;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl;
+  }
+  
+  a {
+    @apply transition-colors duration-300 text-sky-600 hover:text-sky-700;
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+  
+  .btn {
+    @apply px-6 py-3 font-medium rounded-lg transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-sky-500 text-white hover:bg-sky-600 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-sky-600 border-2 border-sky-400 hover:bg-sky-50 shadow-sm hover:shadow-md;
+  }
+  
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-blue-900 mb-6;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 border border-sky-100 hover:shadow-xl transition-shadow;
+  }
+}
+
+/* Blue theme gradients and overlays */
+.bg-blue-overlay {
+  background-color: rgb(224 242 254 / 80%);
+}
+
+.bg-blue-gradient-light {
+  background: linear-gradient(to right, rgb(186 230 253 / 70%), rgb(224 242 254 / 80%));
+}
+
+.bg-blue-gradient-medium {
+  background: linear-gradient(to right, rgb(125 211 252 / 80%), rgb(186 230 253 / 90%));
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(to right, rgb(14 165 233 / 90%), rgb(56 189 248 / 80%));
+}
+
+.bg-blue-gradient-dark {
+  background: linear-gradient(to right, rgb(2 132 199 / 90%), rgb(14 165 233 / 80%));
+}
+
+/* Additional blue gradients */
+.bg-blue-radial {
+  background: radial-gradient(circle, rgb(56 189 248 / 90%), rgb(2 132 199 / 95%));
+}
+
+.bg-blue-diagonal {
+  background: linear-gradient(135deg, rgb(14 165 233), rgb(3 105 161));
+}
+
+.bg-blue-hero {
+  background: linear-gradient(to bottom, rgb(14 165 233), rgb(2 132 199));
+}
+
+.bg-blue-card {
+  background: linear-gradient(to bottom right, rgb(186 230 253), rgb(125 211 252 / 60%));
+}
+
+.bg-blue-cta {
+  background: linear-gradient(to right, rgb(3 105 161), rgb(2 132 199));
+}
+
+.bg-blue-glass {
+  background: linear-gradient(to right, rgb(186 230 253 / 40%), rgb(125 211 252 / 30%));
+  backdrop-filter: blur(8px);
+}
+
+.bg-blue-neon {
+  background: linear-gradient(to right, rgb(14 165 233), rgb(2 132 199));
+  box-shadow: 0 0 20px rgb(56 189 248 / 60%);
+}
+
+.bg-blue-frost {
+  background: linear-gradient(to bottom, rgb(224 242 254), rgb(186 230 253));
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.text-gradient-blue {
+  background: linear-gradient(to right, rgb(2 132 199), rgb(56 189 248));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Blue borders */
+.border-blue {
+  border-color: rgb(125 211 252 / 40%);
+}
+
+.blue-glow {
+  box-shadow: 0 0 15px rgb(56 189 248 / 40%);
+}
+
+.blue-glow-hover:hover {
+  box-shadow: 0 0 20px rgb(14 165 233 / 50%);
+} 
