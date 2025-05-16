@@ -2,38 +2,35 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import ApplyTodayPopup from '../ApplyTodayPopup/ApplyTodayPopup';
 
 const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isApplyPopupOpen, setIsApplyPopupOpen] = useState(false);
   const slideInterval = useRef<NodeJS.Timeout | null>(null);
   
   const properties = [
     {
       id: 1,
-      title: "The Oakwood",
-      price: "$795/mo",
-      features: "3 bed • 2 bath",
-      image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?q=80&w=2670&auto=format&fit=crop",
-      sqft: "1,200",
-      highlights: ["Energy efficient", "New appliances"]
+      title: "The Pulse",
+      price: "$1095/MO",
+      features: "3 bed • 2 Bath",
+      image: "/images/ThePulse.png", // Assuming ThePulse.png is in public/images/
+      sqft: "16x76",
+      highlights: ["Brand new model", "Spacious layout"],
+      virtualTourUrl: "https://momento360.com/e/uc/4c68f3949e9248d7b384deb250e13eca?utm_campaign=embed&utm_source=other&reset-heading=true&size=large",
+      availability: "Last 3 units left"
     },
     {
       id: 2,
-      title: "The Willowbrook",
-      price: "$825/mo",
-      features: "2 bed • 2 bath",
-      image: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=80&w=2670&auto=format&fit=crop",
-      sqft: "980",
-      highlights: ["Corner lot", "Updated kitchen"]
-    },
-    {
-      id: 3,
-      title: "The Pineview",
-      price: "$895/mo",
+      title: "The Lone Star",
+      price: "$1095/Mo",
       features: "3 bed • 2 bath",
-      image: "https://images.unsplash.com/photo-1593604340846-4fbe9763a8f3?q=80&w=2670&auto=format&fit=crop",
-      sqft: "1,350",
-      highlights: ["Premium location", "Large deck"]
+      image: "/images/TheLoneStart.png", // Updated image path
+      sqft: "16x72",
+      highlights: ["Modern design", "Community amenities"],
+      virtualTourUrl: "https://my.matterport.com/show/?m=bo5ofaNrm1C",
+      availability: "Last 2 units left"
     },
   ];
 
@@ -114,14 +111,14 @@ const Hero = () => {
             </motion.div>
 
             <div className="flex gap-3 mb-8">
-              <motion.a 
-                href="#apply" 
+              <motion.button 
+                onClick={() => setIsApplyPopupOpen(true)}
                 className="btn btn-primary"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
                 Apply Today
-              </motion.a>
+              </motion.button>
               <motion.a 
                 href="#homes" 
                 className="btn btn-secondary"
@@ -140,7 +137,7 @@ const Hero = () => {
             {properties.map((property, index) => (
               <motion.div
                 key={property.id}
-                className="absolute inset-0"
+                className="absolute inset-0 flex flex-col"
                 initial={{ opacity: 0 }}
                 animate={{ 
                   opacity: activeSlide === index ? 1 : 0,
@@ -148,19 +145,22 @@ const Hero = () => {
                 }}
                 transition={{ duration: 0.8 }}
               >
+                {/* Image Section */}
                 <div 
-                  className="w-full h-full bg-cover bg-center relative rounded-xl"
+                  className="w-full h-3/5 bg-cover bg-center relative rounded-t-lg flex-shrink-0"
                   style={{ backgroundImage: `url(${property.image})` }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-sky-900/80 via-sky-800/30 to-transparent rounded-xl"></div>
-                  
-                  {/* Property Info Card */}
-                  <motion.div 
-                    className="absolute bottom-4 md:bottom-8 left-3 right-3 md:left-6 md:right-6 bg-white/95 backdrop-blur-sm p-3 md:p-5 rounded-lg shadow-xl border border-sky-200"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  >
+                  <div className="absolute inset-0 bg-gradient-to-t from-sky-900/80 via-sky-800/30 to-transparent rounded-t-lg"></div>
+                </div>
+                
+                {/* Property Info Card Section */}
+                <motion.div 
+                  className="w-full h-2/5 bg-white/95 backdrop-blur-sm p-3 md:p-5 rounded-b-lg shadow-xl border border-sky-200 flex flex-col justify-center overflow-y-auto"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: activeSlide === index ? 1 : 0, y: activeSlide === index ? 0 : 20 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  <div>
                     <div className="flex justify-between items-start mb-2 md:mb-3">
                       <div>
                         <span className="inline-block px-2 py-0.5 bg-sky-50 text-sky-700 text-xs font-medium rounded mb-1 border border-sky-200">Featured</span>
@@ -187,6 +187,12 @@ const Hero = () => {
                       ))}
                     </div>
                     
+                    {property.availability && (
+                      <p className="text-red-500 text-xs md:text-sm font-semibold mt-1 mb-2 md:mb-3 text-center md:text-left">
+                        {property.availability}
+                      </p>
+                    )}
+
                     <div className="flex justify-between items-center pt-2 border-t border-sky-200">
                       <div className="flex items-center text-sky-600 text-xs md:text-sm">
                         <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,7 +201,9 @@ const Hero = () => {
                         <span>{property.sqft} sq.ft.</span>
                       </div>
                       <a 
-                        href="#apply" 
+                        href="https://calendly.com/northwoodestatesmhc/house-tour?month=2025-05"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center bg-blue-gradient text-white px-2 md:px-3 py-1 md:py-1.5 rounded-md font-medium transition-all duration-300 group text-xs md:text-sm hover:shadow-md"
                       >
                         Book Showing
@@ -204,25 +212,27 @@ const Hero = () => {
                         </svg>
                       </a>
                     </div>
-                  </motion.div>
-                </div>
+                  </div>
+                </motion.div>
               </motion.div>
             ))}
 
             {/* Special Offer Ribbon - Top Corner */}
             <div className="absolute top-0 right-0 z-20">
               <div className="bg-blue-gradient text-white px-3 md:px-4 py-1 md:py-2 font-bold text-xs md:text-sm transform rotate-0 origin-top-right shadow-lg rounded-bl-lg">
-                <span className="animate-pulse">SPECIAL OFFER</span>
+                <span>New Homes</span>
               </div>
             </div>
             
             {/* Virtual Tour Button */}
             <div className="absolute top-3 md:top-4 left-3 md:left-4 z-20">
               <motion.a 
-                href="#virtual-tour"
+                href={activeSlide !== null && properties[activeSlide] ? properties[activeSlide].virtualTourUrl : "#"}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/80 hover:bg-sky-50 text-sky-600 px-2 md:px-3 py-1 rounded-lg shadow-lg border border-sky-200 flex items-center transition-all text-xs md:text-sm"
+                className="bg-sky-600 hover:bg-sky-700 text-white px-2 md:px-3 py-1 rounded-lg shadow-lg flex items-center transition-all text-xs md:text-sm font-medium"
               >
                 <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -265,6 +275,16 @@ const Hero = () => {
           Schedule a Tour
         </motion.a>
       </div>
+
+      {/* Render the ApplyTodayPopup */}
+      <ApplyTodayPopup 
+        isOpen={isApplyPopupOpen} 
+        onClose={() => setIsApplyPopupOpen(false)} 
+        onProceed={() => {
+          console.log("Proceeding to application..."); 
+          window.open('https://ewood.twa.rentmanager.com/ApplyNow?propertyID=33&locations=1', '_blank');
+        }}
+      />
     </section>
   );
 };

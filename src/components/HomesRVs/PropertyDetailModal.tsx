@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCheck, FaTimes, FaArrowRight, FaArrowLeft, FaCalendarAlt, FaPhone, FaBed, FaBath, FaRuler } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaArrowRight, FaArrowLeft, FaCalendarAlt, FaPhone, FaBed, FaBath, FaRuler, FaHome } from 'react-icons/fa';
 
 // Types for properties (copied from HomesRVs)
 type PropertyType = {
@@ -19,6 +19,7 @@ type PropertyType = {
   financing?: boolean;
   features?: string[];
   additionalImages?: string[];
+  virtualTourUrl?: string;
 };
 
 type PropertyDetailModalProps = {
@@ -26,6 +27,7 @@ type PropertyDetailModalProps = {
   closePropertyModal: () => void;
   currentImageIndex: number;
   setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>;
+  openApplyPopup: () => void;
 };
 
 const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
@@ -33,6 +35,7 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
   closePropertyModal,
   currentImageIndex,
   setCurrentImageIndex,
+  openApplyPopup,
 }) => {
   // Get current display image (main or additional)
   const getCurrentImage = () => {
@@ -126,10 +129,15 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
               </div>
 
               {/* Price Badge */}
-              <div className="absolute top-4 right-4">
+              <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
                 <div className="bg-blue-gradient text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-sm sm:text-base font-bold shadow-lg">
                   ${selectedProperty.monthlyPrice}/month
                 </div>
+                {selectedProperty.price > 0 && (
+                  <div className="bg-sky-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-md">
+                    Sale Price: ${selectedProperty.price.toLocaleString()}
+                  </div>
+                )}
               </div>
 
               {/* Close Button */}
@@ -143,8 +151,10 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
 
             <div className="p-4 sm:p-6 md:p-8">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4 sm:mb-6">
-                <div>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-sky-900 mb-2">{selectedProperty.name}</h3>
+                <div className="flex-grow">
+                  <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-sky-900">{selectedProperty.name}</h3>
+                  </div>
                   <div className="flex items-center flex-wrap gap-y-2">
                     <span className="text-sky-600 flex items-center mr-4">
                       <FaBed className="mr-1 sm:mr-2" /> {selectedProperty.bedrooms} Bed
@@ -172,6 +182,21 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
                 </div>
               </div>
 
+              {/* Virtual Tour Button - New Position */}
+              {selectedProperty.virtualTourUrl && (
+                <div className="mb-6 mt-4">
+                  <a 
+                    href={selectedProperty.virtualTourUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-blue-gradient text-white py-3 px-4 rounded-lg font-bold text-center flex items-center justify-center transition-all duration-300 hover:shadow-md shadow-sm"
+                  >
+                    <FaHome className="mr-2" />
+                    View Virtual Tour
+                  </a>
+                </div>
+              )}
+
               <p className="text-sky-700 mb-6 text-sm sm:text-base md:text-lg">{selectedProperty.description}</p>
 
               {/* Features List */}
@@ -195,21 +220,24 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
               {/* CTAs */}
               <div className="border-t border-sky-100 pt-6 mt-6 flex flex-col sm:flex-row gap-3">
                 <a 
-                  href="#apply" 
+                  href="https://calendly.com/northwoodestatesmhc/house-tour"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-1 bg-blue-gradient text-white py-3 px-4 rounded-lg font-bold text-center flex items-center justify-center"
-                  onClick={closePropertyModal}
                 >
                   <FaCalendarAlt className="mr-2" />
                   Schedule Showing
                 </a>
-                <a 
-                  href="#apply" 
+                <button 
+                  onClick={() => {
+                    openApplyPopup();
+                    closePropertyModal();
+                  }}
                   className="flex-1 border-2 border-sky-500 text-sky-700 hover:bg-sky-50 py-3 px-4 rounded-lg font-bold text-center flex items-center justify-center"
-                  onClick={closePropertyModal}
                 >
                   <FaPhone className="mr-2" />
-                  Inquire Now
-                </a>
+                  Apply Now
+                </button>
               </div>
             </div>
           </motion.div>

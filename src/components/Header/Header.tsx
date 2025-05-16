@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaBars, FaTimes, FaHome, FaSwimmingPool, FaMapMarkerAlt } from 'react-icons/fa';
+import ApplyTodayPopup from '../ApplyTodayPopup/ApplyTodayPopup';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isApplyPopupOpen, setIsApplyPopupOpen] = useState(false);
 
   // Updated nav items to match page structure
   const navItems = [
@@ -47,12 +49,12 @@ const Header = () => {
             >
               Contact Us
             </a>
-            <a 
-              href="#apply" 
+            <button 
+              onClick={() => setIsApplyPopupOpen(true)}
               className="bg-blue-gradient text-white font-medium py-1.5 px-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 text-sm"
             >
               Apply Now
-            </a>
+            </button>
           </div>
         </div>
 
@@ -88,17 +90,31 @@ const Header = () => {
               >
                 Contact Us
               </a>
-              <a 
-                href="#apply" 
+              <button 
+                onClick={() => {
+                  setIsApplyPopupOpen(true);
+                  setIsMenuOpen(false);
+                }} 
                 className="flex-1 bg-blue-gradient text-white text-center py-2 rounded-lg font-medium text-sm shadow-md hover:shadow-lg transition-all duration-300"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Apply Now
-              </a>
+              </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Render the ApplyTodayPopup */}
+      <ApplyTodayPopup 
+        isOpen={isApplyPopupOpen} 
+        onClose={() => {
+          setIsApplyPopupOpen(false);
+        }} 
+        onProceed={() => {
+          window.open('https://ewood.twa.rentmanager.com/ApplyNow?propertyID=33&locations=1', '_blank');
+          setIsMenuOpen(false);
+        }}
+      />
     </header>
   );
 };

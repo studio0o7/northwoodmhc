@@ -26,6 +26,7 @@ type PropertyModalRootProps = {
   closePropertyModal: () => void;
   currentImageIndex: number;
   setCurrentImageIndex: React.Dispatch<React.SetStateAction<number>>;
+  openApplyPopup: () => void;
 };
 
 const PropertyModalRoot: React.FC<PropertyModalRootProps> = ({
@@ -33,6 +34,7 @@ const PropertyModalRoot: React.FC<PropertyModalRootProps> = ({
   closePropertyModal,
   currentImageIndex,
   setCurrentImageIndex,
+  openApplyPopup,
 }) => {
   const [mounted, setMounted] = useState(false);
   
@@ -48,6 +50,7 @@ const PropertyModalRoot: React.FC<PropertyModalRootProps> = ({
       closePropertyModal={closePropertyModal}
       currentImageIndex={currentImageIndex}
       setCurrentImageIndex={setCurrentImageIndex}
+      openApplyPopup={openApplyPopup}
     />,
     document.body
   ) : null;

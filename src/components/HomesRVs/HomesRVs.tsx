@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { FaBed, FaBath, FaRuler, FaDollarSign, FaHome, FaHandshake, FaInfoCircle, FaCalendarAlt, FaPhone, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import PropertyModalRoot from './PropertyModalRoot';
+import ApplyTodayPopup from '../ApplyTodayPopup/ApplyTodayPopup';
 
 // Types for properties
 type PropertyType = {
@@ -12,6 +13,7 @@ type PropertyType = {
   bedrooms: number;
   bathrooms: number;
   sqft: number;
+  dimensions: string;
   price: number;
   monthlyPrice: number;
   image: string;
@@ -20,6 +22,8 @@ type PropertyType = {
   financing?: boolean;
   features?: string[];
   additionalImages?: string[];
+  availability?: string;
+  virtualTourUrl?: string;
 };
 
 // Purchasing options
@@ -34,6 +38,7 @@ const HomesRVs = () => {
   const [selectedProperty, setSelectedProperty] = useState<PropertyType | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isApplyPopupOpen, setIsApplyPopupOpen] = useState(false);
   
   const purchaseOptions: PurchaseOption[] = [
     {
@@ -56,135 +61,77 @@ const HomesRVs = () => {
     }
   ];
   
-  // Sample data for properties - removed RV properties
+  // Sample data for properties
   const properties: PropertyType[] = [
     {
       id: 1,
-      name: 'Model Home',
-      bedrooms: 3,
+      name: "2 Bed 2 Bath Home",
+      bedrooms: 2,
       bathrooms: 2,
-      sqft: 1200,
-      price: 79900,
-      monthlyPrice: 599,
-      image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      description: 'Spacious model with high-end finishes, quality craftsmanship, and a design that emphasizes both style and functionality.',
+      sqft: 1008,
+      dimensions: "14x72",
+      price: 34995,
+      monthlyPrice: 895,
+      image: "/images/2bed2bath.jpg",
+      description: "This home features new premium 100% waterproof flooring throughout, a new HVAC system, and a new water tank.",
       leaseToOwn: true,
       financing: true,
-      features: [
-        'Energy-efficient appliances',
-        'Central air conditioning',
-        'Walk-in closets',
-        'Modern kitchen with island',
-        'Spacious master bathroom',
-        'Front porch'
-      ],
-      additionalImages: [
-        'https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
-        'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80',
-        'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-      ]
+      availability: "Last unit left",
+      features: ["New waterproof flooring", "New HVAC", "New water tank", "Energy-efficient appliances", "Open floor plan"],
+      additionalImages: ['/images/2bed.jpg', '/images/2bed1.jpg', '/images/2bed2.jpg', '/images/2bed3.jpg'],
     },
     {
       id: 2,
-      name: 'Family Home',
-      bedrooms: 4,
+      name: "3 Bed 2 Bath Home",
+      bedrooms: 3,
       bathrooms: 2,
-      sqft: 1400,
-      price: 89900,
-      monthlyPrice: 699,
-      image: 'https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      description: 'Sleek design with modern features, open-concept living area, well-equipped kitchen, and stylish finishes throughout.',
+      sqft: 1216,
+      dimensions: "16x76",
+      price: 79995,
+      monthlyPrice: 1195,
+      image: "/images/3Bed-ThePulse.jpg",
+      description: "Experience expansive living in this premium 16x76 home, featuring high-end finishes and a design perfect for modern families seeking comfort and style.",
       leaseToOwn: true,
       financing: true,
-      features: [
-        'Open-concept floor plan',
-        'Stainless steel appliances',
-        'Luxury vinyl plank flooring',
-        'Large living room with vaulted ceiling',
-        'Separate laundry room',
-        'Extra storage space'
-      ],
-      additionalImages: [
-        'https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80',
-        'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-      ]
+      availability: "2 units left",
+      features: ["Spacious 16x76 layout", "Premium high-end finishes", "Quality craftsmanship", "Stylish & functional design", "Open-concept living", "Well-equipped kitchen"],
+      additionalImages: ['/images/3BedPulse.jpg', '/images/3BedPulse1.jpg', '/images/3BedPulse2.jpg', '/images/3BedPulse3.jpg'],
+      virtualTourUrl: "https://momento360.com/e/uc/4c68f3949e9248d7b384deb250e13eca?utm_campaign=embed&utm_source=other&reset-heading=true&size=large"
     },
     {
       id: 3,
-      name: 'Compact Home',
-      bedrooms: 2,
-      bathrooms: 1,
-      sqft: 900,
-      price: 59900,
-      monthlyPrice: 499,
-      image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      description: 'Compact yet comfortable home with efficient layout, perfect for singles or couples.',
-      financing: true,
-      features: [
-        'Energy-efficient windows',
-        'Breakfast bar',
-        'Durable metal roof',
-        'Compact yet functional design',
-        'Built-in bookshelves',
-        'Garden tub in bathroom'
-      ],
-      additionalImages: [
-        'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1531835551805-16d864c8d311?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-        'https://images.unsplash.com/photo-1616137422495-1e9e46e2aa77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2052&q=80'
-      ]
-    },
-    {
-      id: 6,
-      name: 'Luxury Model',
+      name: "3 Bed 2 Bath Home",
       bedrooms: 3,
       bathrooms: 2,
-      sqft: 1600,
-      price: 99900,
-      monthlyPrice: 799,
-      image: 'https://images.unsplash.com/photo-1494526585095-c41cabfe98bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      description: 'Premium home with upscale features, spacious rooms, and elegant design touches throughout.',
+      sqft: 1152,
+      dimensions: "16x72",
+      price: 74995,
+      monthlyPrice: 1095,
+      image: "/images/3Bed-TheLone.jpg",
+      description: "Discover modern style and everyday luxury in this 16x72 home, offering a sleek design, comfortable interiors, and attention to detail throughout.",
       leaseToOwn: true,
       financing: true,
-      features: [
-        'Granite countertops',
-        'Hardwood floors',
-        'Garden tub in master bath',
-        'Crown molding',
-        'Recessed lighting',
-        'Smart home features'
-      ],
-      additionalImages: [
-        'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1550223026-0d6fd780c560?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-      ]
+      availability: "3 units left",
+      features: ["Modern 16x72 design", "Comfortable & stylish interiors", "Attention to detail", "Sleek aesthetics", "Open-concept living", "Well-equipped kitchen"],
+      additionalImages: ['/images/3bedlone.png', '/images/3bedlone1.png', '/images/3bedlone2.png', '/images/3bedlone3.png', '/images/3bedlone4.png'],
+      virtualTourUrl: "https://my.matterport.com/show/?m=bo5ofaNrm1C"
     },
     {
-      id: 7,
-      name: 'Modern Living',
+      id: 4,
+      name: "3 Bed 2 Bath Home",
       bedrooms: 3,
       bathrooms: 2,
-      sqft: 1350,
-      price: 84900,
-      monthlyPrice: 649,
-      image: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      description: 'Contemporary home with clean lines, open floor plan, and stylish finishes perfect for modern living.',
+      sqft: 1024,
+      dimensions: "16x64",
+      price: 74995,
+      monthlyPrice: 1095,
+      image: "/images/3Bed-ThePulse2.jpg",
+      description: "This 16x64 home perfectly balances family comfort with an efficient layout, featuring stylish finishes and an inviting atmosphere for quality living.",
+      leaseToOwn: true,
       financing: true,
-      features: [
-        'Open concept design',
-        'Kitchen island with breakfast bar',
-        'Large windows for natural light',
-        'Built-in shelving',
-        'Modern fixtures',
-        'Energy efficient appliances'
-      ],
-      additionalImages: [
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-        'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-      ]
+      features: ["Family-friendly 16x64 layout", "Inviting living experience", "Efficient & stylish design", "Quality finishes", "Open-concept living", "Well-equipped kitchen"],
+      additionalImages: ['/images/3bedlone.png', '/images/3bedlone1.png', '/images/3bedlone2.png', '/images/3bedlone3.png', '/images/3bedlone4.png'],
+      virtualTourUrl: "https://my.matterport.com/show/?m=JU537Fb1dRU"
     }
   ];
 
@@ -316,7 +263,7 @@ const HomesRVs = () => {
                           <FaBath className="mr-1" /> {property.bathrooms}
                         </div>
                         <div className="bg-sky-800/80 text-white px-2 py-1 rounded text-xs md:text-sm font-medium flex items-center">
-                          <FaRuler className="mr-1" /> {property.sqft}
+                          <FaRuler className="mr-1" /> {property.dimensions}
                         </div>
                       </div>
                     </div>
@@ -347,6 +294,13 @@ const HomesRVs = () => {
                     
                     {/* Description with fixed height */}
                     <p className="text-sky-700 text-xs md:text-sm mb-4 line-clamp-2 h-8 md:h-10">{property.description}</p>
+
+                    {/* Availability Info */}
+                    {property.availability && (
+                      <p className="text-red-500 text-xs font-semibold mb-3 text-center">
+                        {property.availability}
+                      </p>
+                    )}
                     
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2 md:gap-3">
@@ -354,7 +308,7 @@ const HomesRVs = () => {
                         className="bg-blue-gradient text-white py-1.5 md:py-2 px-2 rounded-lg font-medium text-xs md:text-sm flex items-center justify-center shadow-md"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.location.href = "#apply";
+                          window.open('https://calendly.com/northwoodestatesmhc/house-tour', '_blank');
                         }}
                       >
                         <FaCalendarAlt className="mr-1" />
@@ -364,11 +318,11 @@ const HomesRVs = () => {
                         className="border-2 border-sky-500 hover:bg-sky-50 text-sky-700 py-1.5 md:py-2 px-2 rounded-lg font-medium text-xs md:text-sm flex items-center justify-center"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.location.href = "#apply";
+                          setIsApplyPopupOpen(true);
                         }}
                       >
                         <FaPhone className="mr-1" />
-                        Inquire Now
+                        Apply Now
                       </button>
                     </div>
                     
@@ -398,8 +352,18 @@ const HomesRVs = () => {
           closePropertyModal={closePropertyModal}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
+          openApplyPopup={() => setIsApplyPopupOpen(true)}
         />
       </div>
+
+      {/* Render the ApplyTodayPopup */}
+      <ApplyTodayPopup 
+        isOpen={isApplyPopupOpen} 
+        onClose={() => setIsApplyPopupOpen(false)} 
+        onProceed={() => {
+          window.open('https://ewood.twa.rentmanager.com/ApplyNow?propertyID=33&locations=1', '_blank');
+        }}
+      />
     </section>
   );
 };

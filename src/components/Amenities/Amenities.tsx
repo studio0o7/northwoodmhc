@@ -32,6 +32,12 @@ const Amenities = () => {
 
   // Community photos
   const photos: PhotoType[] = [
+    { src: "/images/Park1.png", alt: "Park Playground Area" },
+    { src: "/images/Park2.png", alt: "Park Playground View" },
+    { src: "/images/Park3.png", alt: "Northwood Estates Sign" },
+    { src: "/images/Park4.png", alt: "Community Event BBQ" },
+    { src: "/images/Park5.png", alt: "Community Center Back to School" },
+    { src: "/images/Park6.png", alt: "Wood County District Public Library Mobile Unit" },
     { src: "/images/main.JPG", alt: "Main Entrance" },
     { src: "/images/Com1.JPG", alt: "Northwood Estates Community" },
     { src: "/images/com.JPG", alt: "Northwood Estates MHC" },
