@@ -2,36 +2,16 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaFacebook, FaTwitter, FaInstagram, FaPhone, FaEnvelope, FaMapMarkerAlt, FaChevronUp } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
-  // Scroll to top function
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
   
   return (
     <footer id="contact" className="bg-sky-900 text-white relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-sky-800 rounded-full -translate-y-1/2 translate-x-1/4 opacity-30"></div>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-800 rounded-full translate-y-1/2 -translate-x-1/4 opacity-30"></div>
-      
-      {/* Scroll to top button */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <motion.button 
-          onClick={scrollToTop}
-          className="bg-blue-gradient w-12 h-12 rounded-full flex items-center justify-center shadow-lg border-2 border-white"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <FaChevronUp className="text-white" />
-        </motion.button>
-      </div>
       
       <div className="container mx-auto px-4 py-12 relative z-10">
         <motion.div 
@@ -111,36 +91,6 @@ const Footer = () => {
                 </a>
               </motion.li>
             </ul>
-            
-            <div className="mt-8">
-              <h4 className="font-semibold mb-3 text-sky-300">Follow Us</h4>
-              <div className="flex space-x-4">
-                <motion.a 
-                  href="#" 
-                  className="text-white hover:text-sky-300 transition-colors"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <FaFacebook size={24} />
-                </motion.a>
-                <motion.a 
-                  href="#" 
-                  className="text-white hover:text-sky-300 transition-colors"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <FaTwitter size={24} />
-                </motion.a>
-                <motion.a 
-                  href="#" 
-                  className="text-white hover:text-sky-300 transition-colors"
-                  whileHover={{ scale: 1.2 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <FaInstagram size={24} />
-                </motion.a>
-              </div>
-            </div>
           </motion.div>
           
           {/* Special Offer Card */}

@@ -20,31 +20,31 @@ const Testimonials = () => {
       id: 1,
       name: "Justin",
       rating: 5,
-      text: "Absolutely world class customer service! The office staff was absolutely wonderful. Would recommend to anybody, they're rockstars!"
+      text: "World-class customer service! The office staff were wonderful. Highly recommend – they're rockstars!"
     },
     {
       id: 2,
       name: "Andranae Vallier",
       rating: 5,
-      text: "I moved in two weeks ago and I love it here! Everyone is so nice, the staff in the office always respond very quickly when I call and my neighbors always speak. It really feels like a community here."
+      text: "Moved in two weeks ago and love it! Everyone's nice, office staff respond quickly, and neighbors are friendly. Feels like a real community."
     },
     {
       id: 3,
       name: "Liz Frusher",
       rating: 5,
-      text: "The community manager is so sweet! She was so patient and helpful. The maintenance staff was so nice showing us around and even driving to the one that was too far for me to walk while carrying my daughter. Very quiet and well maintained. We are looking forward to moving in!"
+      text: "The community manager is so sweet, patient, and helpful. Maintenance was great showing us around, even helping with my daughter. Quiet and well-maintained. Looking forward to moving in!"
     },
     {
       id: 4,
       name: "Lesley Zimmerman",
       rating: 5,
-      text: "The management team ROCKS! They work so hard with my family and I to get us in and settled. The maintenance staff went above and beyond by showing us 4 different properties as well as answer every question we had. I've had a couple of questionable management issues in the past with renting but these folks are nothing short of amazing. The office staff was out and as soon as they came back they were hitting the floor running with our applications and getting us approved. I am so thankful for this community already."
+      text: "The management team is fantastic! They worked hard to get us settled. Maintenance showed us multiple properties and answered all questions. Past renting issues made me wary, but these folks are amazing. Office staff are efficient and got us approved quickly. So thankful for this community!"
     },
     {
       id: 5,
       name: "Marco Kelly",
       rating: 5,
-      text: "Northwood Estates is by far the best manufactured home community in the area. Whether you're a single, retired, or starting a family they have a place that will fit your needs! The community manager is one of the kindest people I had the pleasure of meeting. They make you feel right at home and are super polite and welcoming! I wouldn't think twice about checking the place out and what they have to offer! The schools are amazing, and people in the community are even better!"
+      text: "Northwood Estates is the best manufactured home community around. Perfect for singles, retirees, or families. The community manager is incredibly kind and welcoming. Don't hesitate to check it out! Great schools and even better people."
     }
   ];
 
@@ -167,7 +167,7 @@ const Testimonials = () => {
             {duplicatedTestimonials.map((testimonial, index) => (
               <div 
                 key={`${testimonial.id}-${index}`}
-                className="testimonial-card flex-shrink-0 w-[300px] bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-sky-100 p-5 flex flex-col h-[280px]"
+                className="testimonial-card flex-shrink-0 w-[360px] bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-sky-100 p-5 flex flex-col h-[280px]"
               >
                 {/* Decorative blue accent */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-blue-gradient rounded-t-xl"></div>
@@ -179,8 +179,8 @@ const Testimonials = () => {
                   ))}
                 </div>
                 
-                {/* Quote */}
-                <div className="relative flex-grow overflow-y-auto max-h-[170px] pr-1 custom-scrollbar">
+                {/* Quote - removed internal scroll */}
+                <div className="relative flex-grow pr-1">
                   <FaQuoteLeft className="text-sky-400 text-lg mb-1 opacity-80 flex-shrink-0" />
                   <p className="text-sky-800 text-sm leading-relaxed mb-3">
                     {testimonial.text}
@@ -214,24 +214,8 @@ const Testimonials = () => {
         </div>
       </div>
 
-      {/* Custom scrollbar styles */}
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f5f9;
-          border-radius: 20px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: #0ea5e9;
-          border-radius: 20px;
-        }
-        .custom-scrollbar {
-          scrollbar-width: thin;
-          scrollbar-color: #0ea5e9 #f1f5f9;
-        }
-      `}</style>
+      {/* Custom scrollbar styles - can be removed since we're no longer using internal scrollbars */}
+      <style jsx global>{``}</style>
     </section>
   );
 };

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FaBed, FaBath, FaRuler, FaDollarSign, FaHome, FaHandshake, FaInfoCircle, FaCalendarAlt, FaPhone, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import { FaBed, FaBath, FaRuler, FaDollarSign, FaHome, FaHandshake, FaInfoCircle, FaCalendarAlt, FaArrowRight, FaArrowLeft, FaFileSignature } from 'react-icons/fa';
 import PropertyModalRoot from './PropertyModalRoot';
 import ApplyTodayPopup from '../ApplyTodayPopup/ApplyTodayPopup';
 
@@ -253,9 +253,8 @@ const HomesRVs = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                     </div>
                     
-                    {/* Property Info Badges */}
-                    <div className="absolute bottom-3 left-0 right-0 flex justify-between px-4">
-                      <div className="flex space-x-2">
+                    {/* Property Info Badges (Top Left - for bed/bath/dimensions) */}
+                    <div className="absolute top-3 left-3 flex space-x-2">
                         <div className="bg-sky-800/80 text-white px-2 py-1 rounded text-xs md:text-sm font-medium flex items-center">
                           <FaBed className="mr-1" /> {property.bedrooms}
                         </div>
@@ -265,16 +264,16 @@ const HomesRVs = () => {
                         <div className="bg-sky-800/80 text-white px-2 py-1 rounded text-xs md:text-sm font-medium flex items-center">
                           <FaRuler className="mr-1" /> {property.dimensions}
                         </div>
-                      </div>
                     </div>
                     
-                    {/* Price badge */}
+                    {/* Price badge (Top Right) */}
                     <div className="absolute top-3 right-3 bg-blue-gradient text-white px-3 py-1 rounded-full font-bold shadow-md text-xs md:text-sm">
                       ${property.monthlyPrice}/mo
                     </div>
                     
-                    {/* Program Labels */}
-                    <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+                    {/* Program Labels & Availability (Now grouped differently) */}
+                    {/* Lease to Own and Financing moved to top-left with property info for grouping, availability to bottom right */}
+                    <div className="absolute top-3 left-3 flex flex-col space-y-1 mt-8"> {/* Adjusted margin-top to avoid overlap */}
                       {property.leaseToOwn && (
                         <span className="bg-sky-600/90 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
                           Lease to Own
@@ -286,6 +285,15 @@ const HomesRVs = () => {
                         </span>
                       )}
                     </div>
+
+                    {/* Availability Badge (Bottom Right) */}
+                    {property.availability && (
+                      <div className="absolute bottom-3 right-3">
+                        <span className="bg-red-600/90 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+                          {property.availability}
+                        </span>
+                      </div>
+                    )}
                   </div>
                   
                   <div className="p-4 md:p-5">
@@ -295,13 +303,6 @@ const HomesRVs = () => {
                     {/* Description with fixed height */}
                     <p className="text-sky-700 text-xs md:text-sm mb-4 line-clamp-2 h-8 md:h-10">{property.description}</p>
 
-                    {/* Availability Info */}
-                    {property.availability && (
-                      <p className="text-red-500 text-xs font-semibold mb-3 text-center">
-                        {property.availability}
-                      </p>
-                    )}
-                    
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2 md:gap-3">
                       <button 
@@ -321,7 +322,7 @@ const HomesRVs = () => {
                           setIsApplyPopupOpen(true);
                         }}
                       >
-                        <FaPhone className="mr-1" />
+                        <FaFileSignature className="mr-1" />
                         Apply Now
                       </button>
                     </div>

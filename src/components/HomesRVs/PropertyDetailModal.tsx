@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaCheck, FaTimes, FaArrowRight, FaArrowLeft, FaCalendarAlt, FaPhone, FaBed, FaBath, FaRuler, FaHome } from 'react-icons/fa';
+import { FaCheck, FaTimes, FaArrowRight, FaArrowLeft, FaCalendarAlt, FaBed, FaBath, FaRuler, FaHome, FaFileSignature } from 'react-icons/fa';
 
 // Types for properties (copied from HomesRVs)
 type PropertyType = {
@@ -233,9 +233,9 @@ const PropertyDetailModal: React.FC<PropertyDetailModalProps> = ({
                     openApplyPopup();
                     closePropertyModal();
                   }}
-                  className="flex-1 border-2 border-sky-500 text-sky-700 hover:bg-sky-50 py-3 px-4 rounded-lg font-bold text-center flex items-center justify-center"
+                  className="bg-blue-gradient text-white py-2.5 px-5 rounded-lg font-medium text-sm flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"
                 >
-                  <FaPhone className="mr-2" />
+                  <FaFileSignature className="mr-2" />
                   Apply Now
                 </button>
               </div>

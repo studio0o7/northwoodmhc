@@ -194,7 +194,7 @@ const Amenities = () => {
               </div>
               
               {/* Modern thumbnail strip */}
-              <div className="p-2 px-1 grid grid-cols-6 gap-1">
+              <div className="p-2 px-1 flex overflow-x-auto scrollbar-hide gap-1">
                 {photos.map((photo, idx) => (
                   <motion.div 
                     key={idx}
@@ -203,19 +203,19 @@ const Amenities = () => {
                       setAutoplay(false);
                     }}
                     className={`
-                      relative overflow-hidden cursor-pointer rounded-md
+                      flex-shrink-0 relative overflow-hidden cursor-pointer rounded-md
                       ${idx === activePhotoIndex ? 'ring-2 ring-sky-500' : 'opacity-70 hover:opacity-100'} 
                       transition-all duration-300
                     `}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <div className="aspect-square relative">
+                    <div className="aspect-square relative w-20 h-20 md:w-24 md:h-24">
                       <Image 
                         src={photo.src}
                         alt={photo.alt}
                         fill
-                        sizes="100px"
+                        sizes="(max-width: 768px) 80px, 96px"
                         style={{ objectFit: 'cover' }}
                         className="transition-transform duration-700 hover:scale-110"
                       />

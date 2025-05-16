@@ -120,9 +120,9 @@ const Neighborhood = () => {
           </p>
         </motion.div>
 
-        {/* Main Feature Card */}
+        {/* Main Feature Card - Hidden on mobile */}
         <motion.div 
-          className="relative z-10 mb-16"
+          className="relative z-10 mb-16 hidden md:block"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -310,7 +310,9 @@ const Neighborhood = () => {
                 Our team would love to show you around and answer any questions about the community and surrounding area.
               </p>
               <motion.a 
-                href="#apply" 
+                href="https://calendly.com/northwoodestatesmhc/house-tour?month=2025-05" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="bg-white text-sky-600 py-3 px-7 rounded-lg font-medium inline-flex items-center group shadow-md"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}

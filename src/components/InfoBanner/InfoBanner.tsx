@@ -13,7 +13,7 @@ const InfoBanner = () => {
   ];
 
   return (
-    <div className="bg-blue-gradient-dark text-white py-3 overflow-hidden border-b border-blue-600 shadow-md">
+    <div className="bg-blue-gradient-dark text-white py-3 overflow-hidden shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
           {/* Features Scroller */}

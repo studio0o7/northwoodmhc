@@ -9,7 +9,8 @@ const Contact = () => {
     fullName: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    bedsNeeded: '',
   });
   
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -33,12 +34,16 @@ const Contact = () => {
     } else if (!/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone)) {
       newErrors.phone = 'Invalid phone number format';
     }
+
+    if (!formData.bedsNeeded) {
+      newErrors.bedsNeeded = 'Please select number of beds';
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
@@ -61,10 +66,19 @@ const Contact = () => {
     
     setFormStatus('submitting');
     
-    // Simulate API call
     try {
-      // This would be an actual API call in production
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Send form data via API route that will use Nodemailer
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
       
       // Success response
       setFormStatus('success');
@@ -72,7 +86,8 @@ const Contact = () => {
         fullName: '',
         email: '',
         phone: '',
-        message: ''
+        message: '',
+        bedsNeeded: '',
       });
       
       // Reset form after 5 seconds
@@ -213,6 +228,31 @@ const Contact = () => {
                         <p className="text-red-600 text-sm mt-1">{errors.phone}</p>
                       )}
                     </div>
+                  </div>
+
+                  {/* New beds needed field */}
+                  <div className="mb-4">
+                    <label htmlFor="bedsNeeded" className="block text-sky-800 font-medium mb-2">
+                      Number of Beds Needed <span className="text-red-600">*</span>
+                    </label>
+                    <select
+                      id="bedsNeeded"
+                      name="bedsNeeded"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all duration-300 ${
+                        errors.bedsNeeded ? "border-red-500 focus:ring-red-200" : "border-sky-300 focus:ring-sky-200"
+                      }`}
+                      value={formData.bedsNeeded}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select number of beds</option>
+                      <option value="1">1 Bedroom</option>
+                      <option value="2">2 Bedrooms</option>
+                      <option value="3">3 Bedrooms</option>
+                      <option value="4">4+ Bedrooms</option>
+                    </select>
+                    {errors.bedsNeeded && (
+                      <p className="text-red-600 text-sm mt-1">{errors.bedsNeeded}</p>
+                    )}
                   </div>
                   
                   <div className="mb-6">
