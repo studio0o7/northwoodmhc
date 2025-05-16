@@ -3,9 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import PropertyDetailModal from './PropertyDetailModal';
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
-import { FaTimes, FaBed, FaBath, FaRuler, FaDollarSign, FaCalendarAlt, FaInfoCircle, FaChevronLeft, FaChevronRight, FaFileSignature, FaExternalLinkAlt } from 'react-icons/fa';
 
 // Types for properties
 type PropertyType = {
