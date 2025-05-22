@@ -96,10 +96,15 @@ const Hero = () => {
               
               <div className="relative z-10">
                 <div className="bg-white text-sky-600 font-bold text-xs rounded-full px-3 py-1 inline-block mb-2 shadow-md">
-                  LIMITED TIME OFFER
+                  EXCLUSIVE OFFER
                 </div>
-                <h3 className="font-bold text-2xl text-white mb-1">First Month&apos;s Rent 50% OFF!</h3>
-                <p className="text-white/90 text-sm">For new residents who apply before October 31st</p>
+                <h3 className="font-bold text-2xl text-white mb-1">Dollar for Dollar Match!</h3>
+                <p className="text-white/90 text-sm mb-2">We match up to:</p>
+                <ul className="text-white/90 text-sm list-disc pl-5 mb-1">
+                  <li>$3,000 for down payment on homes $10k-$40k</li>
+                  <li>$5,000 for down payment on homes $41k+</li>
+                </ul>
+                <p className="text-white/90 text-sm font-medium mt-2">Plus 50% of home rent as credit toward purchase!</p>
               </div>
               
               {/* Decorative elements */}
@@ -169,9 +174,9 @@ const Hero = () => {
                       </div>
                       <div className="text-right flex-shrink-0 pl-2">
                         <span className="text-sky-600 font-bold text-lg md:text-xl block mb-0.5 md:mb-1">{property.price}</span>
-                        {/* Special Offer Tag */}
+                        {/* Property Offer Tag */}
                         <div className="bg-sky-600 text-white text-xs font-medium px-2 py-0.5 rounded inline-block">
-                          50% OFF 1st Month
+                          50% of Home rent as credit!
                         </div>
                       </div>
                     </div>
@@ -232,7 +237,7 @@ const Hero = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-sky-600 hover:bg-sky-700 text-white px-2 md:px-3 py-1 rounded-lg shadow-lg flex items-center transition-all text-xs md:text-sm font-medium"
+                className="bg-sky-600 hover:bg-white hover:text-sky-700 text-white px-2 md:px-3 py-1 rounded-lg shadow-lg flex items-center transition-all text-xs md:text-sm font-medium border border-transparent hover:border-sky-600"
               >
                 <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />

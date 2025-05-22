@@ -115,12 +115,15 @@ const Footer = () => {
               
               <div className="relative z-10">
                 <div className="bg-white text-sky-600 font-bold text-xs rounded-full px-3 py-1 inline-block mb-3 shadow-md">
-                  LIMITED TIME OFFER
+                  EXCLUSIVE OFFER
                 </div>
-                <h4 className="font-bold text-xl text-white mb-3">First Month&apos;s Rent 50% OFF!</h4>
-                <p className="text-white/90 mb-4">
-                  For new residents who apply before October 31st
-                </p>
+                <h4 className="font-bold text-xl text-white mb-2">Dollar for Dollar Match!</h4>
+                <p className="text-white/90 text-sm mb-2">We match up to:</p>
+                <ul className="text-white/90 text-sm list-disc pl-5 mb-1">
+                  <li>$3,000 for down payment on homes $10k-$40k</li>
+                  <li>$5,000 for down payment on homes $41k+</li>
+                </ul>
+                <p className="text-white/90 text-sm font-medium mb-4">Plus 50% of home rent as credit toward purchase!</p>
                 <motion.a 
                   href="#apply" 
                   className="bg-white text-sky-700 hover:bg-sky-50 px-6 py-2.5 rounded-lg inline-block font-semibold transition-colors shadow-md"
