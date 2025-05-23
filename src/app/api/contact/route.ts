@@ -42,6 +42,7 @@ export async function POST(request: Request) {
     const mailOptions = {
       from: `"Northwood Estates MHC" <${process.env.GMAIL_USER}>`,
       to: process.env.EMAIL_TO,
+      cc: process.env.EMAIL_CC, // Add CC recipient if configured
       subject: `New Contact Form Submission - ${data.fullName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
