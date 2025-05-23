@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   title: 'Northwood Estates | Mobile Home Community in Northwood, Ohio',
   description: 'Discover affordable manufactured homes in a peaceful, pet-friendly community. Offering spacious lots, modern amenities, and a great location in Northwood, Ohio.',
   keywords: 'mobile home community, Northwood, Ohio, manufactured homes, affordable housing, RV lots, pet friendly',
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/icon.svg',
+    },
+  },
 };
 
 export default function RootLayout({
